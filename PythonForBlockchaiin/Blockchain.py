@@ -9,8 +9,8 @@ def get_last_blockchain_value():
     return blockchain[-1]
 
 
-def add_transaction(transaction_amount, last_transaction=[1]):
-    """Append a new value as well as the last blockchain value to the blockchain"""
+def add_transaction(transaction_amount, last_transaction):
+    """Appends a new value as well as the last blockchain value to the blockchain"""
     if last_transaction == None:
         last_transaction = [1]
     blockchain.append([last_transaction, transaction_amount])
@@ -37,49 +37,43 @@ def print_blockchain_elements():
 
 
 def verify_chain():
+    # block_index = 0
     is_valid = True
-    for block_index in range(1, len(blockchain), 1):
-        if blockchain[block_index][0] != blockchain[block_index - 1]:
+    for block_index in range(len(blockchain)):
+        if block_index == 0:
+            continue
+        elif blockchain[block_index][0] == blockchain[block_index - 1]:
+            is_valid = True
+        else:
             is_valid = False
             break
-
-
-
-
-
-    # is_valid = True
-    # for block_index in range(len(blockchain)):
-    #     if block_index == 0:
-    #         continue
-    #     elif blockchain[block_index][0] == blockchain[block_index - 1]:
-    #         is_valid = True
-    #     else:
-    #         is_valid = False
-    #         break
-
-    # block_index = 0
+    return is_valid
+    
     # for block in blockchain:
     #     if block_index == 0:
     #         block_index += 1
     #         continue
-    #     elif block[0] == blockchain[block_index-1]:
+    #     elif block[0] == blockchain[block_index - 1]:
     #         is_valid = True
     #     else:
     #         is_valid = False
     #         break
     #     block_index += 1
-    # return is_valid
+    
+
+
 
 
 waiting_for_input = True
 
 
 while waiting_for_input:
-    print("Please choose: ")
-    print("1: Add a new transaction value")
-    print("2: Output the blockchain blocks")
-    print("h: Manipulate the chain")
-    print("q: Quit")
+    print("Please choose:")
+    print("1: To add a new transaction value")
+    print("2: To output the blockchain blocks")
+    print("h: To manipulate the chain")
+    print("q: To quit")
+
     user_choice = get_user_choice()
     if user_choice == '1':
         tx_amount = get_transaction_value()
